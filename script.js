@@ -3,10 +3,8 @@ const songs = [
   { title: "Song 2", artist: "Artist 2", src: "songs/song2.mp3" },
   { title: "Song 3", artist: "Artist 3", src: "songs/song3.mp3" }
 ];
-
 let songIndex = 0;
 let autoplayEnabled = true;
-
 const audio = document.getElementById("audio");
 const playBtn = document.getElementById("play");
 const prevBtn = document.getElementById("prev");
@@ -20,8 +18,6 @@ const durationEl = document.getElementById("duration");
 const volumeControl = document.getElementById("volume");
 const playlist = document.getElementById("playlist");
 const autoplayCheckbox = document.getElementById("autoplay");
-
-// Load Song
 function loadSong(song) {
   title.textContent = song.title;
   artist.textContent = song.artist;
@@ -29,8 +25,6 @@ function loadSong(song) {
   updatePlaylistUI();
 }
 loadSong(songs[songIndex]);
-
-// Play / Pause
 function playSong() {
   audio.play();
   playBtn.textContent = "⏸️";
@@ -42,8 +36,6 @@ function pauseSong() {
 playBtn.addEventListener("click", () => {
   audio.paused ? playSong() : pauseSong();
 });
-
-// Next / Previous
 nextBtn.addEventListener("click", () => {
   songIndex = (songIndex + 1) % songs.length;
   loadSong(songs[songIndex]);
@@ -54,8 +46,6 @@ prevBtn.addEventListener("click", () => {
   loadSong(songs[songIndex]);
   playSong();
 });
-
-// Progress bar
 audio.addEventListener("timeupdate", (e) => {
   const { currentTime, duration } = e.srcElement;
   let progressPercent = (currentTime / duration) * 100;
@@ -79,18 +69,12 @@ progressContainer.addEventListener("click", (e) => {
   const duration = audio.duration;
   audio.currentTime = (clickX / width) * duration;
 });
-
-// Volume
 volumeControl.addEventListener("input", (e) => {
   audio.volume = e.target.value;
 });
-
-// Autoplay toggle
 autoplayCheckbox.addEventListener("change", (e) => {
   autoplayEnabled = e.target.checked;
 });
-
-// Auto-play next (only if enabled)
 audio.addEventListener("ended", () => {
   if (autoplayEnabled) {
     songIndex = (songIndex + 1) % songs.length;
@@ -100,8 +84,6 @@ audio.addEventListener("ended", () => {
     pauseSong();
   }
 });
-
-// Playlist UI
 function updatePlaylistUI() {
   playlist.innerHTML = "";
   songs.forEach((song, index) => {
@@ -117,3 +99,4 @@ function updatePlaylistUI() {
   });
 }
 updatePlaylistUI();
+
